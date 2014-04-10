@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title> Dialog Class</title>
+         <!--js libraries-->
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- -->
+         
+    </head>
+    <body>
+        <script type="text/javascript">
+            //this object will content the Dialog's options
+            var dialogOptions={
+                
+                autoOpen:true,
+                modal:true,
+                width:'auto',
+                height:'auto',
+                title:"",
+                buttons:[ {text:"Aceptar",click:function(){ alert("default function!"); } } ],
+                dialogType:"",
+                dialogDiv:"",
+                dialogMessage:"",
+                setProperties:function(dialogTitle,dialogType,dialogDiv,dialogMessage){
+                    this.title=dialogTitle;
+                    this.dialogType=dialogType;
+                    this.dialogDiv=dialogDiv;
+                    this.dialogMessage=dialogMessage;
+                },
+                setDialogSize:function(width,height){
+                    if(width!=""){
+                        this.width=width;
+                    }
+                    if(height!=""){
+                        this.height=height;
+                    }
+                }
+
+            };
+
+           //this function allow to create new Dialog messages with different content dialogType
+           function openDialog(){
+                //here I create a dialog dialogType message
+                if( dialogOptions.dialogType=="message" ){
+                    //here I have replaced my initial button
+                    dialogOptions.buttons=[ {text:"Ok",click:function(){ $(this).dialog("close"); } } ];
+                }
+                //here I create a dialog form message
+                else if( dialogOptions.dialogType="form" ){
+                    //here I have added, another Dialog's button
+                    dialogOptions.buttons[1]={ text:"Cancel",click:function(){ $(this).dialog( "close" ); } }; 
+                }   
+                //finally I have prepared my dialog to be open :)
+                $("#"+dialogOptions.dialogDiv).dialog(dialogOptions);
+           }
+           
+           //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+           
+           //of course, I can use this code in another js file, here I just invoke both objects and set up the properties
+           $(document).ready(function(){
+               var msj="this wil be my message that I'll be using in my div :)"
+               //I set up the dialog options
+               dialogOptions.setProperties("this is my title :)","message","myDialog",msj);
+               openDialog();
+           });
+            
+        </script> 
+        <div id="myDialog" style="display:none"> this wil be my message that I'll be using in my div :)  </div>
+    </body>
+</html>
