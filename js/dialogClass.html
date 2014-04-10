@@ -10,7 +10,7 @@
     </head>
     <body>
         <script type="text/javascript">
-            //this object will content the Dialog's options
+            //this will be the options object to create new dialogs with different content,sizes,buttons and so on
             var dialogOptions={
                 
                 autoOpen:true,
@@ -39,7 +39,7 @@
 
             };
 
-           //this function allow to create new Dialog messages with different content dialogType
+           //this function allow to create new Dialog messages with different content
            function openDialog(){
                 //here I create a dialog dialogType message
                 if( dialogOptions.dialogType=="message" ){
@@ -50,22 +50,30 @@
                 else if( dialogOptions.dialogType="form" ){
                     //here I have added, another Dialog's button
                     dialogOptions.buttons[1]={ text:"Cancel",click:function(){ $(this).dialog( "close" ); } }; 
-                }   
+                }  
+                
+                //we ask for a dialog content
+                if(dialogOptions.dialogMessage!=""){
+                     //here I have added the dialog's content
+                     $("#"+dialogOptions.dialogDiv).html("<p>"+dialogOptions.dialogMessage+"</p>" );
+                }
                 //finally I have prepared my dialog to be open :)
                 $("#"+dialogOptions.dialogDiv).dialog(dialogOptions);
            }
            
            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
            
-           //of course, I can use this code in another js file, here I just invoke both objects and set up the properties
+           //of course, I can use this code in another js file
            $(document).ready(function(){
+               //set up a message to the dialog
                var msj="this wil be my message that I'll be using in my div :)"
                //I set up the dialog options
                dialogOptions.setProperties("this is my title :)","message","myDialog",msj);
+               //finally I create my dialog with my options
                openDialog();
            });
             
         </script> 
-        <div id="myDialog" style="display:none"> this wil be my message that I'll be using in my div :)  </div>
+        <div id="myDialog" style="display:none">  </div>
     </body>
 </html>
