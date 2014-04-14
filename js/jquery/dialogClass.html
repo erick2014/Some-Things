@@ -18,16 +18,18 @@
                 width:'auto',
                 height:'auto',
                 title:"",
-                buttons:[ {text:"Aceptar",click:function(){ alert("default function!"); } } ],
+                buttons:[ {text:"Aceptar",click:function(){ alert( "default function!" ); } } ],
                 dialogType:"",
                 dialogDiv:"",
                 dialogMessage:"",
+             
                 setProperties:function(dialogTitle,dialogType,dialogDiv,dialogMessage){
                     this.title=dialogTitle;
                     this.dialogType=dialogType;
                     this.dialogDiv=dialogDiv;
                     this.dialogMessage=dialogMessage;
                 },
+                
                 setDialogSize:function(width,height){
                     if(width!=""){
                         this.width=width;
@@ -35,23 +37,30 @@
                     if(height!=""){
                         this.height=height;
                     }
+                },
+                
+                createButtons:function(btnText,functionName,param){
+                   return [ {text:btnText,click:function(){ functionName(param); } } ];
                 }
 
             };
 
            //this function allow to create new Dialog messages with different content
            function openDialog(){
+                
+                var botones=dialogOptions.createButtons( "Ok",dialogFunctions, "mensajeeeeeeeeee" );
+        
                 //here I create a dialog dialogType message
                 if( dialogOptions.dialogType=="message" ){
                     //here I have replaced my initial button
-                    dialogOptions.buttons=[ {text:"Ok",click:function(){ $(this).dialog("close"); } } ];
+                    dialogOptions.buttons=botones;
                 }
                 //here I create a dialog form message
                 else if( dialogOptions.dialogType="form" ){
                     //here I have added, another Dialog's button
                     dialogOptions.buttons[1]={ text:"Cancel",click:function(){ $(this).dialog( "close" ); } }; 
                 }  
-                
+                var prueba=dialogOptions.dialogFunctionName;
                 //we ask for a dialog content
                 if(dialogOptions.dialogMessage!=""){
                      //here I have added the dialog's content
@@ -59,6 +68,10 @@
                 }
                 //finally I have prepared my dialog to be open :)
                 $("#"+dialogOptions.dialogDiv).dialog(dialogOptions);
+           }
+           
+           function dialogFunctions(param){
+               alert(param);
            }
            
            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
