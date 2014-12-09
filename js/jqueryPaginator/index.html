@@ -70,37 +70,31 @@
         //and show the first n (show_per_page) elements
         $('#content').children().slice(0, show_per_page).css('display', 'block');
 
-        //Add go_to_page listener
+        //Add go_to_page event listener
         $(".page_link").click(function(e){
           e.preventDefault();
           go_to_page($(this).attr("href"));
         })
+
         //Add previous page listener
         $(".previous_link").click(function(e){
           e.preventDefault();
-          previous();
-        })
-        //Add next page listener
-        $(".next_link").click(function(e){
-          e.preventDefault();
-          next();
-        })
-
-        function previous(){
           new_page = parseInt($('#current_page').val()) - 1;
           //if there is an item before the current active link run the function
           if($('.active_page').prev('.page_link').length==true){
             go_to_page(new_page);
           }
-        }
+        });
 
-        function next(){
+        //Add next page listener
+        $(".next_link").click(function(e){
+          e.preventDefault();
           new_page = parseInt($('#current_page').val()) + 1;
           //if there is an item after the current active link run the function
           if($('.active_page').next('.page_link').length==true){
             go_to_page(new_page);
           }
-        }
+        })
 
         function go_to_page(page_num){
           //get the number of items shown per page
