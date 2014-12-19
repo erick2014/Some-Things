@@ -1,0 +1,8 @@
+{
+"name" : "Bc-downloader",
+"version" : "0.0.1",
+"dependencies" : {
+"request" : "latest",
+"line-by-line" : "latest"
+}
+}
