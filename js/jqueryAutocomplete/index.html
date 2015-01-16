@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script>
+  function Autocomplete(){
+    this.data;
+  }
+  Autocomplete.prototype.get_promise=function(objConfig){
+    //return the promise
+    return $.ajax({ type:objConfig.method, dataType:"json", url:objConfig.path, data:objConfig.data });
+  }
+
+  Autocomplete.prototype.set_data=function(data){
+    this.data=data;
+  }
+
+  //method to get and draw closest establishments
+  Autocomplete.prototype.search_data=function(objConfig){
+    var self=this;
+
+    var dataPromise=this.get_promise({path:objConfig.path,
+                                      method:"GET",
+                                      url:objConfig.path,
+                                      data:objConfig.params
+                                    });
+
+    var realPromise=Promise.resolve(dataPromise)
+    .then(function(data){
+      objConfig.objResponse(data);
+      self[objConfig.callback]();
+    })
+
+  }
+
+  Autocomplete.prototype.autocomplete_handler=function(){
+    var self=this;
+    var objConfig;
+
+     $( "#tags" ).autocomplete({
+        source:function(request,response){
+          $.ajax({
+            url: "autocomplete_data",
+            dataType: "json",
+            data: { term : request.term, testParam :"test param"},
+            success: function(data) { response(data); }
+          });
+        },
+        minLength:3,
+        select:function(event,ui){
+          console.log(ui);
+          //self.search_data(ui);
+        }
+    });
+  }
+  $(document).ready(function(){
+    objAutoComplete=new Autocomplete();
+    objAutoComplete.autocomplete_handler();
+  });
+
+  </script>
+</head>
+<body>
+  <div class="ui-widget">
+    <label for="tags">Tags:</label>
+    <input id="tags">
+  </div>
+</body>
+</html>
