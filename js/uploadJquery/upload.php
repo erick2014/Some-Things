@@ -10,7 +10,7 @@ $targetFolder = '/uploads'; // Relative to the root
 
 if ( !empty($_FILES) && isset($_FILES["file"]) ) {
 	//validate the image size
-	if( $_FILES['file']['size'] <17000){
+	if( $_FILES['file']['size'] <57000){
 		$tempFile = $_FILES['file']['tmp_name'];
 		$targetPath = $_SERVER['DOCUMENT_ROOT']."/dropzone/" . $targetFolder;
 		$targetFile = rtrim($targetPath,'/') . '/' . $_FILES['file']['name'];
